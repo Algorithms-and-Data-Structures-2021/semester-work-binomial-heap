@@ -10,7 +10,7 @@ namespace itis {
     Node *child;
     Node *sibling;
 
-    Node() {
+     Node() {
       this->data = 0;
       this->degree = 0;
       this->parent = nullptr;
@@ -27,19 +27,27 @@ namespace itis {
     }
 
     ~Node();
+
   };
+
 
   struct BinomialHeap {
    public:
     Node *head;
 
-    BinomialHeap();
+     BinomialHeap();
     explicit BinomialHeap(Node *node);
 
     static void linkBinomialTrees(Node *newTree, Node *addedTree);
-    void setHead(Node *head);
+    void createSampleHeap1();
+    void createSampleHeap2();
+    void createSampleHeap3();
+    void printHeap();
+    Node * getHead();
+    void setHead(Node * head);
     void merge(BinomialHeap *addedHeap);
     ~BinomialHeap();
+
   };
 
-}  // namespace itis
+}
