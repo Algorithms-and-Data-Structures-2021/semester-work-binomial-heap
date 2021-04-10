@@ -1,8 +1,8 @@
-
 #include "data_structure.hpp"
 #include <iostream>
-using namespace std;
 #include "queue"
+
+using namespace std;
 namespace itis {
   typedef Node *NodePtr;
 
@@ -14,70 +14,105 @@ namespace itis {
     this->head = node;
   }
   //Соединить два биномиальных дерева одинаковой степени
-  void linkBinomialTrees(NodePtr x, NodePtr y) {
-    y->parent = x;
-    y->sibling = x->child;
-    x->child = y;
-    x->degree += 1;
+  void BinomialHeap::linkBinomialTrees(Node *newTree, Node *addedTree) {
+    addedTree->parent = newTree;
+    addedTree->sibling = newTree->child;
+    newTree->child = addedTree;
+    newTree->degree += 1;
   }
 
-  void BinomialHeap::merge(BinomialHeap *heap2) {
-    if (this->head == nullptr) {
-      return;
-    } else if (heap2->head == nullptr) {
-      this->head = heap2->head;
-    }
-    auto *h = new BinomialHeap;
+  //соединить 2 кучи
+  void BinomialHeap::merge(BinomialHeap *addedHeap) {
     NodePtr node1 = this->head;
-    NodePtr node2 = heap2->head;
+    NodePtr node2 = addedHeap->head;
+    NodePtr newHeap = nullptr;
+    NodePtr tempHeap = nullptr;
 
-    while ((node1 != nullptr) && (node2 != nullptr)) {
-      if (node1->degree <= node2->degree) {
-        h->head = node1;
-        node1 = node1->sibling;
-
-      } else {
-        h->head = node2;
-        node2 = node2->sibling;
-      }
-    }
-
-    while (node1 != nullptr) {
-      h->head = node1;
+    if (node1->degree <= node2->degree) {
+      newHeap = node1;
       node1 = node1->sibling;
-    }
-
-    while (node2 != nullptr) {
-      h->head = node2;
+    } else {
+      newHeap = node2;
       node2 = node2->sibling;
     }
-    this->head = h->head;
-  }
 
-  void BinomialHeap::printHeap() {
-    NodePtr currPtr = this->head;
-    while (currPtr != nullptr) {
-      cout << "B" << currPtr->degree << endl;
-      cout << "There are " << pow(2, currPtr->degree) << " nodes in this tree" << endl;
-      cout << "The level order traversal is" << endl;
-      queue<NodePtr> q;
-      q.push(currPtr);
-      while (!q.empty()) {
-        NodePtr p = q.front();
-        q.pop();
-        cout << p->data << " ";
+    tempHeap = newHeap;
 
-        if (p->child != nullptr) {
-          NodePtr tempPtr = p->child;
-          while (tempPtr != nullptr) {
-            q.push(tempPtr);
-            tempPtr = tempPtr->sibling;
+    while (node1 != nullptr && node2 != nullptr) {
+      if (node1->degree <= node2->degree) {
+        newHeap->sibling = node1;
+        node1 = node1->sibling;
+      } else {
+        newHeap->sibling = node2;
+        node2 = node2->sibling;
+      }
+
+      newHeap = newHeap->sibling;
+    }
+
+    if (node1 != nullptr) {
+
+      while (node1 != nullptr) {
+        newHeap->sibling = node1;
+        node1 = node1->sibling;
+        newHeap = newHeap->sibling;
+      }
+    }
+
+    if (node2 != nullptr) {
+
+      while (node2 != nullptr) {
+        newHeap->sibling = node2;
+        node2 = node2->sibling;
+        newHeap = newHeap->sibling;
+      }
+    }
+
+    newHeap = tempHeap;
+    NodePtr prev = nullptr;
+    NodePtr next = newHeap->sibling;
+
+    while (next != nullptr) {
+
+      if ((newHeap->degree != next->degree) || (next->sibling != nullptr && newHeap->degree == next->sibling->degree)) {
+        prev = newHeap;
+        newHeap = next;
+      } else {
+
+        if (newHeap->data <= next->data) {
+          newHeap->sibling = next->sibling;
+          BinomialHeap::linkBinomialTrees(newHeap, next);
+        } else {
+          if (prev == nullptr) {
+            tempHeap = next;
+          } else {
+            prev->sibling = next;
           }
+
+          BinomialHeap::linkBinomialTrees(next, newHeap);
+          newHeap = next;
         }
       }
-      currPtr = currPtr->sibling;
-      cout << endl << endl;
+
+      next = newHeap->sibling;
     }
+
+    setHead(tempHeap);
   }
 
+  BinomialHeap::~BinomialHeap() {
+    delete head;
+  }
+
+  void BinomialHeap::setHead(Node *head1) {
+    this->head = head1;
+  };
+
+  Node::~Node() {
+    data = 0;
+    degree = 0;
+    parent = nullptr;
+    child = nullptr;
+    sibling = nullptr;
+  }
 }  // namespace itis

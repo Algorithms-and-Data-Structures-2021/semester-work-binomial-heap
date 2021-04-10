@@ -1,16 +1,16 @@
 #pragma once
 
-
 namespace itis {
 
   struct Node {
+
     int data;
     int degree;
     Node *parent;
     Node *child;
     Node *sibling;
 
-    explicit Node() {
+    Node() {
       this->data = 0;
       this->degree = 0;
       this->parent = nullptr;
@@ -18,37 +18,28 @@ namespace itis {
       this->sibling = nullptr;
     }
 
-    Node(Node *node, int data, int degree) {
-      node->data = data;
-      node->degree = degree;
-      node->parent = nullptr;
-      node->child = nullptr;
-      node->sibling = nullptr;
+    explicit Node(int data, int degree) {
+      this->data = data;
+      this->degree = degree;
+      this->parent = nullptr;
+      this->child = nullptr;
+      this->sibling = nullptr;
     }
 
+    ~Node();
   };
-
 
   struct BinomialHeap {
    public:
     Node *head;
 
     BinomialHeap();
-    BinomialHeap(Node *node);
+    explicit BinomialHeap(Node *node);
 
-    static void linkBinomialTrees(Node *x, Node * y);
-    Node * findMinimum();
-    void createSampleHeap1();
-    void createSampleHeap2();
-    void createSampleHeap3();
-    void insert(int data);
-    void printHeap();
-    Node * getHead();
-    void setHead(Node * head);
-    void merge(BinomialHeap *h1);
-    Node * deleteMin();
+    static void linkBinomialTrees(Node *newTree, Node *addedTree);
+    void setHead(Node *head);
+    void merge(BinomialHeap *addedHeap);
     ~BinomialHeap();
-
   };
 
-}
+}  // namespace itis
