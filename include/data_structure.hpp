@@ -1,27 +1,54 @@
 #pragma once
 
-// Заголовочный файл с объявлением структуры данных
 
 namespace itis {
 
-  // Tip 1: объявите здесь необходимые структуры, функции, константы и прочее
+  struct Node {
+    int data;
+    int degree;
+    Node *parent;
+    Node *child;
+    Node *sibling;
 
-  // Пример: объявление константы времени компиляции в заголовочном файле
-  inline constexpr auto kStringConstant = "Hello, stranger!";
-
-  // Пример: объявление структуры с полями и методами
-  struct MyStructure {
-   public:
-    int size_{0};
-    int capacity_{0};
-    int* data_{nullptr};
-
-    // Tip 2: На начальном этапе разработки структуры данных можете определения методов задавать в
-    // заголовочном файле, как только работа будет завершена, можно будет оставить здесь только объявления.
-
-    int size() const {
-      return size_;
+    explicit Node() {
+      this->data = 0;
+      this->degree = 0;
+      this->parent = nullptr;
+      this->child = nullptr;
+      this->sibling = nullptr;
     }
+
+    Node(Node *node, int data, int degree) {
+      node->data = data;
+      node->degree = degree;
+      node->parent = nullptr;
+      node->child = nullptr;
+      node->sibling = nullptr;
+    }
+
   };
 
-}  // namespace itis
+
+  struct BinomialHeap {
+   public:
+    Node *head;
+
+    BinomialHeap();
+    BinomialHeap(Node *node);
+
+    static void linkBinomialTrees(Node *x, Node * y);
+    Node * findMinimum();
+    void createSampleHeap1();
+    void createSampleHeap2();
+    void createSampleHeap3();
+    void insert(int data);
+    void printHeap();
+    Node * getHead();
+    void setHead(Node * head);
+    void merge(BinomialHeap *h1);
+    Node * deleteMin();
+    ~BinomialHeap();
+
+  };
+
+}
