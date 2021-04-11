@@ -117,7 +117,8 @@ namespace itis {
 
   void BinomialHeap::setHead(Node *head1) {
     this->head = head1;
-  };
+
+  }
 
   void BinomialHeap::printHeap() {
     NodePtr currPtr = this->head;
@@ -220,7 +221,12 @@ namespace itis {
     node1->sibling = node3;
 
   }
-
+  void BinomialHeap::insert(int data) {
+    BinomialHeap *h = new BinomialHeap();
+    auto node = new Node(data,2);
+    h->head=node;
+    merge(h);
+  }
 
 
   Node::~Node() {

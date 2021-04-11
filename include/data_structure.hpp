@@ -46,6 +46,7 @@ namespace itis {
     Node * getHead();
     void setHead(Node * head);
     void merge(BinomialHeap *addedHeap);
+    void insert(int data);
     ~BinomialHeap();
 
   };
