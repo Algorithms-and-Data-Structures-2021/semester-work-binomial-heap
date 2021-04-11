@@ -22,12 +22,13 @@ namespace itis {
   }
 
   void BinomialHeap::merge(BinomialHeap *addedHeap) {
+
       NodePtr node1 = this->head;
       NodePtr node2 = addedHeap->head;
       NodePtr newHeap = nullptr;
       NodePtr tempHeap = nullptr;
 
-      if (node1->degree <= node2->degree) {
+      if (node1->degree <= node2->degree) { //выбираем корень
         newHeap = node1;
         node1 = node1->sibling;
       } else {
@@ -35,9 +36,9 @@ namespace itis {
         node2 = node2->sibling;
       }
 
-      tempHeap = newHeap;
+      tempHeap = newHeap; //запоминаем корень
 
-      while(node1 != nullptr && node2 != nullptr) {
+      while(node1 != nullptr && node2 != nullptr) {//прикрепляем вершины по очереди
         if (node1->degree <= node2->degree) {
           newHeap->sibling = node1;
           node1 = node1->sibling;
@@ -67,36 +68,46 @@ namespace itis {
         }
       }
 
-      newHeap = tempHeap;
+      newHeap = tempHeap; //кидаем указатель
+
       NodePtr prev = nullptr;
       NodePtr next = newHeap->sibling;
 
       while (next != nullptr) {
+        //если 1!=2 или 1==2==3 (ниже то же самое, по условиям)
+      //если 2 первых дерева неравны по длине или если есть 3 дерево и 1 дерево с 3 деревом равны по длине
+        //так как 2 ситуации с самого начала быть не может, то мы мёрджаем в итоге 2 и 3 дерево, так как если 1==2==3, то 1 100% меньше по значению, чем 2 и 3, потому что мы присоединили к нему раньше
+        if ((newHeap->degree != next->degree )
+            || (next->sibling != nullptr && newHeap->degree == next->sibling->degree)) {
+          prev = newHeap; //пред деревео - 1
+          newHeap = next; //текущее - 2
 
-        if ((newHeap->degree != next->degree )|| (next->sibling != nullptr && newHeap->degree == next->sibling->degree)) {
-          prev = newHeap;
-          newHeap = next;
         } else {
 
+          //если значение в 1 дереве меньше чем значение во 2 дереве
           if (newHeap->data <= next->data) {
-            newHeap->sibling = next->sibling;
-            BinomialHeap::linkBinomialTrees(newHeap, next);
-          } else {
-            if (prev == nullptr) {
+
+            newHeap->sibling = next->sibling; //2 дерево убираем в детей
+            BinomialHeap::linkBinomialTrees(newHeap, next); //присоединяем 2 дерево к 1
+
+          } else { //если значение в 1 больше чем во 2
+
+            if (prev == nullptr) { //если дерево хед, то 2 дерево теперь хед
               tempHeap = next;
             } else {
-              prev->sibling = next;
+              prev->sibling = next; //если дерево не хед, то у дерева, идущего до 1, сиблингом делаем 2, чтобы выкинуть 1 из деревьев и присоединить
             }
 
-            BinomialHeap::linkBinomialTrees(next, newHeap);
-            newHeap = next;
+            BinomialHeap::linkBinomialTrees(next, newHeap); //ко 2 присоединяем 1
+            newHeap = next; //2 дерево кидаем в хипу
           }
         }
 
-        next = newHeap->sibling;
+        next = newHeap->sibling; //переставляем некст на следующее дерево
       }
 
-      setHead(tempHeap);
+      setHead(tempHeap); //устанавливаем новую голову (если ко 2 присоединили 1 и хед пропал), если ничего не делали, то хед остаётся тот же
+      //вообще, можно поменять на this->head=tempHeap;
     }
 
 
@@ -111,9 +122,9 @@ namespace itis {
   void BinomialHeap::printHeap() {
     NodePtr currPtr = this->head;
     while (currPtr != nullptr) {
-      cout << "B" << currPtr->degree << endl;
-      cout << "There are " << pow(2, currPtr->degree) << " nodes in this tree" << endl;
-      cout << "The level order traversal is" << endl;
+      cout << "Степень дерева" << currPtr->degree << endl;
+      cout  << pow(2, currPtr->degree) << " узлов в дереве" << endl;
+      cout << "Вот они слева направо: " << endl;
       queue<NodePtr> q;
       q.push(currPtr);
       while (!q.empty()) {
@@ -133,7 +144,6 @@ namespace itis {
       cout << endl << endl;
     }
   }
-
 
 
 
