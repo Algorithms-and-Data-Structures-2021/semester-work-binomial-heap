@@ -44,6 +44,8 @@ namespace itis {
     void createSampleHeap3();
     void printHeap();
     Node * getHead();
+    int deleteMin();
+    void reverse();
     void setHead(Node * head);
     void merge(BinomialHeap *addedHeap);
     void insert(int data);

@@ -1,8 +1,9 @@
-
 #include "data_structure.hpp"
 #include <iostream>
-using namespace std;
 #include "queue"
+#include "stack"
+
+using namespace std;
 namespace itis {
   typedef Node *NodePtr;
 
@@ -22,103 +23,101 @@ namespace itis {
   }
 
   void BinomialHeap::merge(BinomialHeap *addedHeap) {
-    Node *tempHeap;
+    Node *tempHeap = nullptr;
     if (this->head == nullptr) {
 
       tempHeap = addedHeap->head;
     }
-      if (this->head != nullptr && addedHeap->head != nullptr) {
+    if (this->head != nullptr && addedHeap->head != nullptr) {
 
-        NodePtr node1 = this->head;
-        NodePtr node2 = addedHeap->head;
-        NodePtr newHeap = nullptr;
-        NodePtr tempHeap = nullptr;
+      NodePtr node1 = this->head;
+      NodePtr node2 = addedHeap->head;
+      NodePtr newHeap = nullptr;
+      NodePtr tempHeap = nullptr;
 
-        if (node1->degree <= node2->degree) {  //выбираем корень
-          newHeap = node1;
+      if (node1->degree <= node2->degree) {  //выбираем корень
+        newHeap = node1;
+        node1 = node1->sibling;
+      } else {
+        newHeap = node2;
+        node2 = node2->sibling;
+      }
+
+      tempHeap = newHeap;  //запоминаем корень
+
+      while (node1 != nullptr && node2 != nullptr) {  //прикрепляем вершины по очереди
+        if (node1->degree <= node2->degree) {
+          newHeap->sibling = node1;
           node1 = node1->sibling;
         } else {
-          newHeap = node2;
+          newHeap->sibling = node2;
           node2 = node2->sibling;
         }
 
-        tempHeap = newHeap;  //запоминаем корень
+        newHeap = newHeap->sibling;
+      }
 
-        while (node1 != nullptr && node2 != nullptr) {  //прикрепляем вершины по очереди
-          if (node1->degree <= node2->degree) {
-            newHeap->sibling = node1;
-            node1 = node1->sibling;
-          } else {
-            newHeap->sibling = node2;
-            node2 = node2->sibling;
-          }
+      if (node1 != nullptr) {
 
+        while (node1 != nullptr) {
+          newHeap->sibling = node1;
+          node1 = node1->sibling;
           newHeap = newHeap->sibling;
-        }
-
-        if (node1 != nullptr) {
-
-          while (node1 != nullptr) {
-            newHeap->sibling = node1;
-            node1 = node1->sibling;
-            newHeap = newHeap->sibling;
-          }
-        }
-
-        if (node2 != nullptr) {
-
-          while (node2 != nullptr) {
-            newHeap->sibling = node2;
-            node2 = node2->sibling;
-            newHeap = newHeap->sibling;
-          }
-        }
-
-        newHeap = tempHeap;  //кидаем указатель
-
-        NodePtr prev = nullptr;
-        NodePtr next = newHeap->sibling;
-        //
-        while (next != nullptr) {
-          //если 1!=2 или 1==2==3 (ниже то же самое, по условиям)
-          //если 2 первых дерева неравны по длине или если есть 3 дерево и 1 дерево с 3 деревом равны по длине
-          //так как 2 ситуации с самого начала быть не может, то мы мёрджаем в итоге 2 и 3 дерево, так как если 1==2==3, то 1 100% меньше по значению, чем 2 и 3, потому что мы присоединили к нему раньше
-          if ((newHeap->degree != next->degree)
-              || (next->sibling != nullptr && newHeap->degree == next->sibling->degree)) {
-            prev = newHeap;  //пред деревео - 1
-            newHeap = next;  //текущее - 2
-
-          } else {
-
-            //если значение в 1 дереве меньше чем значение во 2 дереве
-            if (newHeap->data <= next->data) {
-
-              newHeap->sibling = next->sibling;                //2 дерево убираем в детей
-              BinomialHeap::linkBinomialTrees(newHeap, next);  //присоединяем 2 дерево к 1
-
-            } else {  //если значение в 1 больше чем во 2
-
-              if (prev == nullptr) {  //если дерево хед, то 2 дерево теперь хед
-                tempHeap = next;
-              } else {
-                prev->sibling =
-                    next;  //если дерево не хед, то у дерева, идущего до 1, сиблингом делаем 2, чтобы выкинуть 1 из деревьев и присоединить
-              }
-
-              BinomialHeap::linkBinomialTrees(next, newHeap);  //ко 2 присоединяем 1
-              newHeap = next;                                  //2 дерево кидаем в хипу
-            }
-          }
-
-          next = newHeap->sibling;  //переставляем некст на следующее дерево
         }
       }
 
-      setHead(
-          tempHeap);  //устанавливаем новую голову (если ко 2 присоединили 1 и хед пропал), если ничего не делали, то хед остаётся тот же
-      //вообще, можно поменять на this->head=tempHeap;
+      if (node2 != nullptr) {
+
+        while (node2 != nullptr) {
+          newHeap->sibling = node2;
+          node2 = node2->sibling;
+          newHeap = newHeap->sibling;
+        }
+      }
+
+      newHeap = tempHeap;  //кидаем указатель
+
+      NodePtr prev = nullptr;
+      NodePtr next = newHeap->sibling;
+      //
+      while (next != nullptr) {
+        //если 1!=2 или 1==2==3 (ниже то же самое, по условиям)
+        //если 2 первых дерева неравны по длине или если есть 3 дерево и 1 дерево с 3 деревом равны по длине
+        //так как 2 ситуации с самого начала быть не может, то мы мёрджаем в итоге 2 и 3 дерево, так как если 1==2==3, то 1 100% меньше по значению, чем 2 и 3, потому что мы присоединили к нему раньше
+        if ((newHeap->degree != next->degree)
+            || (next->sibling != nullptr && newHeap->degree == next->sibling->degree)) {
+          prev = newHeap;  //пред деревео - 1
+          newHeap = next;  //текущее - 2
+
+        } else {
+
+          //если значение в 1 дереве меньше чем значение во 2 дереве
+          if (newHeap->data <= next->data) {
+
+            newHeap->sibling = next->sibling;                //2 дерево убираем в детей
+            BinomialHeap::linkBinomialTrees(newHeap, next);  //присоединяем 2 дерево к 1
+
+          } else {  //если значение в 1 больше чем во 2
+
+            if (prev == nullptr) {  //если дерево хед, то 2 дерево теперь хед
+              tempHeap = next;
+            } else {
+              prev->sibling =
+                  next;  //если дерево не хед, то у дерева, идущего до 1, сиблингом делаем 2, чтобы выкинуть 1 из деревьев и присоединить
+            }
+
+            BinomialHeap::linkBinomialTrees(next, newHeap);  //ко 2 присоединяем 1
+            newHeap = next;                                  //2 дерево кидаем в хипу
+          }
+        }
+
+        next = newHeap->sibling;  //переставляем некст на следующее дерево
+      }
     }
 
+    setHead(tempHeap);  //устанавливаем новую голову (если ко 2 присоединили 1 и хед пропал), если ничего не делали, то хед остаётся тот же
+    //вообще, можно поменять на this->head=tempHeap;
+  }
 
   BinomialHeap::~BinomialHeap() {
     delete head;
@@ -126,6 +125,104 @@ namespace itis {
 
   void BinomialHeap::setHead(Node *head1) {
     this->head = head1;
+  }
+
+  void BinomialHeap::insert(int data) {
+    BinomialHeap *newHeap = new BinomialHeap();
+    auto node = new Node(data, 0);
+    newHeap->head = node;
+    merge(newHeap);
+  }
+
+  Node::~Node() {
+    data = 0;
+    degree = 0;
+    parent = nullptr;
+    child = nullptr;
+    sibling = nullptr;
+  }
+
+  int BinomialHeap::deleteMin() {
+    Node *prevNode = nullptr;
+    Node *minNode = nullptr;
+    Node *node = nullptr;
+    Node *minNodeСhild = nullptr;
+    int minValue = INT_MAX;
+
+    if (this->head != nullptr) {
+
+      Node *minPrevNode = nullptr;   //предыдущее дерево минимального дерева
+      minNode = this->head;          //мин дерево
+      node = (this->head)->sibling;  //текущее дерево
+      prevNode = this->head;         //предыдущ дерево
+      /*
+         * Найти мин дерево и его предыд дерево
+         */
+      while (node != nullptr) {
+
+        if (node->data < minNode->data) {
+          minNode = node;
+          minPrevNode = prevNode;
+        }
+        prevNode = prevNode->sibling;
+        node = node->sibling;
+      }
+
+      //выкидываем мин дерево из кучи
+      //Если предыд узел мин узла есть
+      if (minPrevNode != nullptr) {
+        minPrevNode->sibling = minNode->sibling; //следующий для предыдМин = след для минимального
+      } else { //иначе
+        this->head = minNode->sibling; //хед = след для минимального
+      }
+
+        // Делаем у всех детей мин корня родителем null
+      minNodeСhild = minNode->child;
+      node = minNodeСhild;
+
+      while (node != nullptr) {
+        node->parent = minNode->parent;
+        node = node->sibling;
+      }
+      /*
+         * Удаляем мин корень
+         */
+      minNode->sibling = nullptr;
+      minNode->child = nullptr;
+      minNode->parent = nullptr;
+      minValue = minNode->degree;
+      delete minNode;
+      /*
+         * Объединить 2 кучи
+         */
+      BinomialHeap *heap1 = new BinomialHeap(minNodeСhild);
+      merge(heap1);
+    }
+
+    return minValue;
+  }
+
+  void BinomialHeap::reverse() {
+    // no need to reverse if node is nullptr
+    // or there is only 1 node.
+    if (this->head != nullptr && this->head->sibling != nullptr) {
+
+      Node * list_to_do = this->head;
+
+      Node *reversed_heap = this->head;
+      reversed_heap->sibling = nullptr;
+
+      while (list_to_do != nullptr) {
+        Node * temp = list_to_do;
+        list_to_do = list_to_do->sibling;
+
+        temp->sibling = reversed_heap;
+        reversed_heap = temp;
+      }
+
+      this->head = reversed_heap;
+    }
+
   }
 
   void BinomialHeap::printHeap() {
@@ -187,7 +284,7 @@ namespace itis {
     node6->child = node7;
     node7->parent = node6;
     node8->parent = node6;
-    node7->parent = node6;
+    node9->parent = node6;
     node7->child = node10;
     node7->sibling = node8;
     node8->child = node12;
@@ -227,18 +324,4 @@ namespace itis {
     node1->sibling = node3;
   }
 
-  void BinomialHeap::insert(int data) {
-    BinomialHeap *h = new BinomialHeap();
-    auto node = new Node(data, 0);
-    h->head = node;
-    merge(h);
-  }
-
-  Node::~Node() {
-    data = 0;
-    degree = 0;
-    parent = nullptr;
-    child = nullptr;
-    sibling = nullptr;
-  }
 }  // namespace itis
