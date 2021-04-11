@@ -72,7 +72,7 @@ namespace itis {
 
       NodePtr prev = nullptr;
       NodePtr next = newHeap->sibling;
-
+//
       while (next != nullptr) {
         //если 1!=2 или 1==2==3 (ниже то же самое, по условиям)
       //если 2 первых дерева неравны по длине или если есть 3 дерево и 1 дерево с 3 деревом равны по длине
