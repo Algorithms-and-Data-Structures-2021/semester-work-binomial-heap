@@ -24,10 +24,7 @@ namespace itis {
 
   void BinomialHeap::merge(BinomialHeap *addedHeap) {
     Node *tempHeap = nullptr;
-    if (this->head == nullptr) {
 
-      tempHeap = addedHeap->head;
-    }
     if (this->head != nullptr && addedHeap->head != nullptr) {
 
       NodePtr node1 = this->head;
@@ -117,40 +114,15 @@ namespace itis {
           tempHeap);  //устанавливаем новую голову (если ко 2 присоединили 1 и хед пропал), если ничего не делали, то хед остаётся тот же
       //вообще, можно поменять на this->head=tempHeap;
     }
+
+    if (this->head == nullptr) {
+
+      tempHeap = addedHeap->head;
+      setHead(tempHeap);
+    }
+
   }
 
-  BinomialHeap::~BinomialHeap() {
-    Node *temp = head;
-    if (temp == nullptr) {
-    }
-    else {
-      queue<Node*> q;
-      q.push(temp);
-
-      while (temp->sibling != nullptr) {
-        temp = temp->sibling;
-        q.push(temp);
-      }
-      while (!q.empty()) {
-        temp = q.front();
-        q.pop();
-        Node *old = temp;
-        if (temp != nullptr) {
-
-          if (temp->child != nullptr) {
-            temp = temp->child;
-            q.push(nullptr);
-            q.push(temp);
-            while (temp->sibling != nullptr) {
-              temp = temp->sibling;
-              q.push(temp);
-            }
-          }
-        }
-        old = nullptr;
-      }
-    }
-  }
 
   void BinomialHeap::setHead(Node *head1) {
     this->head = head1;
@@ -164,12 +136,12 @@ namespace itis {
   }
 
   Node::~Node() {
+    cout<<"node deleted " << data << endl;
     data = 0;
     degree = 0;
     parent = nullptr;
     child = nullptr;
     sibling = nullptr;
-    cout<<"123";
   }
 
   int BinomialHeap::deleteMin() {
@@ -228,8 +200,6 @@ namespace itis {
       BinomialHeap *heap1 = new BinomialHeap(minNodeСhild);
       heap1->reverse();
       merge(heap1);
-
-
     }
 
     return minValue;
@@ -277,6 +247,32 @@ namespace itis {
       currPtr = currPtr->sibling;
       cout << endl << endl;
     }
+  }
+
+  BinomialHeap::~BinomialHeap(){
+    NodePtr currPtr = this->head;
+    vector<Node *> nodes;
+    while (currPtr != nullptr) {
+      queue<NodePtr> q;
+      q.push(currPtr);
+      while (!q.empty()) {
+        NodePtr p = q.front();
+        nodes.push_back(q.front());
+        q.pop();
+
+        if (p->child != nullptr) {
+          NodePtr tempPtr = p->child;
+          while (tempPtr != nullptr) {
+            q.push(tempPtr);
+            tempPtr = tempPtr->sibling;
+          }
+        }
+      }
+
+      currPtr = currPtr->sibling;
+    }
+    for(int i = 0; i < nodes.size(); i++)
+      delete nodes[i];
   }
 
   // create sample heap (given in figure Fig 10 (a))
