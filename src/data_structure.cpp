@@ -120,18 +120,35 @@ namespace itis {
   }
 
   BinomialHeap::~BinomialHeap() {
-    NodePtr currPtr = this->head;
-   if(currPtr!= nullptr) {
-      NodePtr curSib=currPtr->sibling;
-      while(curSib!= nullptr){
-        NodePtr curSibChild=curSib->child;
-        while (curSibChild!= nullptr){
-          delete curSibChild;
-        }
-        delete curSib;
+    Node *temp = head;
+    if (temp == nullptr) {
+    }
+    else {
+      queue<Node*> q;
+      q.push(temp);
+
+      while (temp->sibling != nullptr) {
+        temp = temp->sibling;
+        q.push(temp);
       }
-     delete currPtr;
-     cout<<"Ll";
+      while (!q.empty()) {
+        temp = q.front();
+        q.pop();
+        Node *old = temp;
+        if (temp != nullptr) {
+
+          if (temp->child != nullptr) {
+            temp = temp->child;
+            q.push(nullptr);
+            q.push(temp);
+            while (temp->sibling != nullptr) {
+              temp = temp->sibling;
+              q.push(temp);
+            }
+          }
+        }
+        old = nullptr;
+      }
     }
   }
 
