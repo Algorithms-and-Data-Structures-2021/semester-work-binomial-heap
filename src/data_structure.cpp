@@ -120,7 +120,19 @@ namespace itis {
   }
 
   BinomialHeap::~BinomialHeap() {
-    delete head;
+    NodePtr currPtr = this->head;
+   if(currPtr!= nullptr) {
+      NodePtr curSib=currPtr->sibling;
+      while(curSib!= nullptr){
+        NodePtr curSibChild=curSib->child;
+        while (curSibChild!= nullptr){
+          delete curSibChild;
+        }
+        delete curSib;
+      }
+     delete currPtr;
+     cout<<"Ll";
+    }
   }
 
   void BinomialHeap::setHead(Node *head1) {
@@ -140,6 +152,7 @@ namespace itis {
     parent = nullptr;
     child = nullptr;
     sibling = nullptr;
+    cout<<"123";
   }
 
   int BinomialHeap::deleteMin() {
