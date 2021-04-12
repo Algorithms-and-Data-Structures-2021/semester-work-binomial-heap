@@ -134,7 +134,6 @@ namespace itis {
   }
 
   Node::~Node() {
-    cout << "node deleted " << data << endl;
     data = 0;
     degree = 0;
     parent = nullptr;
@@ -229,17 +228,20 @@ namespace itis {
       cout << "Here they are from left to right: " << endl;
       queue<NodePtr> q;
       q.push(currPtr);
+
       while (!q.empty()) {
         NodePtr p = q.front();
         q.pop();
-        cout << p->data << " ";
+        cout << p->data << " " << endl;
 
         if (p->child != nullptr) {
           NodePtr tempPtr = p->child;
+
           while (tempPtr != nullptr) {
             q.push(tempPtr);
             tempPtr = tempPtr->sibling;
           }
+          cout << endl;
         }
       }
       currPtr = currPtr->sibling;

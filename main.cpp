@@ -1,16 +1,12 @@
 #include <iostream>
 #include "data_structure.hpp"
-
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
+using namespace std;
 
 int main() {
-
   auto *node7 = new itis::Node(7, 16);
   auto *node8 = new itis::Node(8, 4);
   auto *heap1 = new itis::BinomialHeap();
-  heap1->createSampleHeap2();
+  //  heap1->createSampleHeap2();
 
   //  auto *heap2 = new itis::BinomialHeap();
   //  heap2->createSampleHeap3();
@@ -29,7 +25,10 @@ int main() {
   //  heap1->insert(1);
   //  heap1->insert(3);
   //  heap1->insert(5);
+  for (int i = 0; i < 100; ++i) {
+    heap1->insert(rand());
+  }
   heap1->printHeap();
-  delete heap1;
+  //  delete heap1;
   return 0;
 }
