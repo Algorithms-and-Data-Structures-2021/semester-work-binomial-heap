@@ -120,9 +120,7 @@ namespace itis {
       tempHeap = addedHeap->head;
       setHead(tempHeap);
     }
-
   }
-
 
   void BinomialHeap::setHead(Node *head1) {
     this->head = head1;
@@ -136,7 +134,7 @@ namespace itis {
   }
 
   Node::~Node() {
-    cout<<"node deleted " << data << endl;
+    cout << "node deleted " << data << endl;
     data = 0;
     degree = 0;
     parent = nullptr;
@@ -249,7 +247,7 @@ namespace itis {
     }
   }
 
-  BinomialHeap::~BinomialHeap(){
+  BinomialHeap::~BinomialHeap() {
     NodePtr currPtr = this->head;
     vector<Node *> nodes;
     while (currPtr != nullptr) {
@@ -271,7 +269,7 @@ namespace itis {
 
       currPtr = currPtr->sibling;
     }
-    for(int i = 0; i < nodes.size(); i++)
+    for (int i = 0; i < nodes.size(); i++)
       delete nodes[i];
   }
 
