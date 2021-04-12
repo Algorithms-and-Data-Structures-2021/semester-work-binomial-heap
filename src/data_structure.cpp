@@ -113,10 +113,10 @@ namespace itis {
 
         next = newHeap->sibling;  //переставляем некст на следующее дерево
       }
+      setHead(
+          tempHeap);  //устанавливаем новую голову (если ко 2 присоединили 1 и хед пропал), если ничего не делали, то хед остаётся тот же
+      //вообще, можно поменять на this->head=tempHeap;
     }
-
-    setHead(tempHeap);  //устанавливаем новую голову (если ко 2 присоединили 1 и хед пропал), если ничего не делали, то хед остаётся тот же
-    //вообще, можно поменять на this->head=tempHeap;
   }
 
   BinomialHeap::~BinomialHeap() {
@@ -201,12 +201,12 @@ namespace itis {
       //выкидываем мин дерево из кучи
       //Если предыд узел мин узла есть
       if (minPrevNode != nullptr) {
-        minPrevNode->sibling = minNode->sibling; //следующий для предыдМин = след для минимального
-      } else { //иначе
-        this->head = minNode->sibling; //хед = след для минимального
+        minPrevNode->sibling = minNode->sibling;  //следующий для предыдМин = след для минимального
+      } else {                                    //иначе
+        this->head = minNode->sibling;  //хед = след для минимального
       }
 
-        // Делаем у всех детей мин корня родителем null
+      // Делаем у всех детей мин корня родителем null
       minNodeСhild = minNode->child;
       node = minNodeСhild;
 
@@ -226,33 +226,31 @@ namespace itis {
          * Объединить 2 кучи
          */
       BinomialHeap *heap1 = new BinomialHeap(minNodeСhild);
+      heap1->reverse();
       merge(heap1);
+
+
     }
 
     return minValue;
   }
 
   void BinomialHeap::reverse() {
-    // no need to reverse if node is nullptr
-    // or there is only 1 node.
-    if (this->head != nullptr && this->head->sibling != nullptr) {
-
-      Node * list_to_do = this->head;
-
-      Node *reversed_heap = this->head;
-      reversed_heap->sibling = nullptr;
-
-      while (list_to_do != nullptr) {
-        Node * temp = list_to_do;
-        list_to_do = list_to_do->sibling;
-
-        temp->sibling = reversed_heap;
-        reversed_heap = temp;
-      }
-
-      this->head = reversed_heap;
+    stack<Node *> queue;
+    while (this->head != nullptr) {
+      queue.push(this->head);
+      this->head = this->head->sibling;
+      queue.top()->sibling = nullptr;
     }
-
+    this->head = queue.top();
+    Node *temp = queue.top();
+    queue.pop();
+    while (!queue.empty()) {
+      this->head->sibling = queue.top();
+      queue.pop();
+      this->head = this->head->sibling;
+    }
+    this->head = temp;
   }
 
   void BinomialHeap::printHeap() {
