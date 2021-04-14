@@ -27,7 +27,7 @@ int main() {
   auto* heap1 = new itis::BinomialHeap();
   string path = string("C:\\Users\\111\\CLionProjects\\semester-work-binomial-heapheap\\dataset\\data\\dataset-generated10k.csv");
   ifstream input_stream;
-                           input_stream.open(path);
+  input_stream.open(path);
   vector<int> intValues;
   string line;
   if(!input_stream.is_open()){
@@ -40,7 +40,7 @@ int main() {
   const auto time_point_before = std::chrono::steady_clock::now();
 
   for (int i = 0; i <intValues.size() ; ++i) {
-heap1->insert(intValues[i]);
+    heap1->insert(intValues[i]);
   }
   const auto time_point_after = std::chrono::steady_clock::now();
   const auto time_diff = time_point_after - time_point_before;
