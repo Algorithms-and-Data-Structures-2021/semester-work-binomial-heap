@@ -24,7 +24,10 @@ namespace itis {
 
   void BinomialHeap::merge(BinomialHeap *addedHeap) {
     Node *tempHeap = nullptr;
+    if (this->head == nullptr) {
 
+      tempHeap = addedHeap->head;
+    }
     if (this->head != nullptr && addedHeap->head != nullptr) {
 
       NodePtr node1 = this->head;
@@ -110,15 +113,42 @@ namespace itis {
 
         next = newHeap->sibling;  //переставляем некст на следующее дерево
       }
-      setHead(
-          tempHeap);  //устанавливаем новую голову (если ко 2 присоединили 1 и хед пропал), если ничего не делали, то хед остаётся тот же
-      //вообще, можно поменять на this->head=tempHeap;
     }
 
-    if (this->head == nullptr) {
+    setHead(tempHeap);  //устанавливаем новую голову (если ко 2 присоединили 1 и хед пропал), если ничего не делали, то хед остаётся тот же
+    //вообще, можно поменять на this->head=tempHeap;
+  }
 
-      tempHeap = addedHeap->head;
-      setHead(tempHeap);
+  BinomialHeap::~BinomialHeap() {
+    Node *temp = head;
+    if (temp == nullptr) {
+    }
+    else {
+      queue<Node*> q;
+      q.push(temp);
+
+      while (temp->sibling != nullptr) {
+        temp = temp->sibling;
+        q.push(temp);
+      }
+      while (!q.empty()) {
+        temp = q.front();
+        q.pop();
+        Node *old = temp;
+        if (temp != nullptr) {
+
+          if (temp->child != nullptr) {
+            temp = temp->child;
+            q.push(nullptr);
+            q.push(temp);
+            while (temp->sibling != nullptr) {
+              temp = temp->sibling;
+              q.push(temp);
+            }
+          }
+        }
+        old = nullptr;
+      }
     }
   }
 
@@ -139,6 +169,7 @@ namespace itis {
     parent = nullptr;
     child = nullptr;
     sibling = nullptr;
+    cout<<"123";
   }
 
   int BinomialHeap::deleteMin() {
@@ -170,12 +201,12 @@ namespace itis {
       //выкидываем мин дерево из кучи
       //Если предыд узел мин узла есть
       if (minPrevNode != nullptr) {
-        minPrevNode->sibling = minNode->sibling;  //следующий для предыдМин = след для минимального
-      } else {                                    //иначе
-        this->head = minNode->sibling;  //хед = след для минимального
+        minPrevNode->sibling = minNode->sibling; //следующий для предыдМин = след для минимального
+      } else { //иначе
+        this->head = minNode->sibling; //хед = след для минимального
       }
 
-      // Делаем у всех детей мин корня родителем null
+        // Делаем у всех детей мин корня родителем null
       minNodeСhild = minNode->child;
       node = minNodeСhild;
 
@@ -195,7 +226,6 @@ namespace itis {
          * Объединить 2 кучи
          */
       BinomialHeap *heap1 = new BinomialHeap(minNodeСhild);
-      heap1->reverse();
       merge(heap1);
     }
 
@@ -203,21 +233,26 @@ namespace itis {
   }
 
   void BinomialHeap::reverse() {
-    stack<Node *> queue;
-    while (this->head != nullptr) {
-      queue.push(this->head);
-      this->head = this->head->sibling;
-      queue.top()->sibling = nullptr;
+    // no need to reverse if node is nullptr
+    // or there is only 1 node.
+    if (this->head != nullptr && this->head->sibling != nullptr) {
+
+      Node * list_to_do = this->head;
+
+      Node *reversed_heap = this->head;
+      reversed_heap->sibling = nullptr;
+
+      while (list_to_do != nullptr) {
+        Node * temp = list_to_do;
+        list_to_do = list_to_do->sibling;
+
+        temp->sibling = reversed_heap;
+        reversed_heap = temp;
+      }
+
+      this->head = reversed_heap;
     }
-    this->head = queue.top();
-    Node *temp = queue.top();
-    queue.pop();
-    while (!queue.empty()) {
-      this->head->sibling = queue.top();
-      queue.pop();
-      this->head = this->head->sibling;
-    }
-    this->head = temp;
+
   }
 
   void BinomialHeap::printHeap() {
@@ -228,51 +263,22 @@ namespace itis {
       cout << "Here they are from left to right: " << endl;
       queue<NodePtr> q;
       q.push(currPtr);
-
       while (!q.empty()) {
         NodePtr p = q.front();
         q.pop();
-        cout << p->data << " " << endl;
+        cout << p->data << " ";
 
         if (p->child != nullptr) {
           NodePtr tempPtr = p->child;
-
           while (tempPtr != nullptr) {
             q.push(tempPtr);
             tempPtr = tempPtr->sibling;
           }
-          cout << endl;
         }
       }
       currPtr = currPtr->sibling;
       cout << endl << endl;
     }
-  }
-
-  BinomialHeap::~BinomialHeap() {
-    NodePtr currPtr = this->head;
-    vector<Node *> nodes;
-    while (currPtr != nullptr) {
-      queue<NodePtr> q;
-      q.push(currPtr);
-      while (!q.empty()) {
-        NodePtr p = q.front();
-        nodes.push_back(q.front());
-        q.pop();
-
-        if (p->child != nullptr) {
-          NodePtr tempPtr = p->child;
-          while (tempPtr != nullptr) {
-            q.push(tempPtr);
-            tempPtr = tempPtr->sibling;
-          }
-        }
-      }
-
-      currPtr = currPtr->sibling;
-    }
-    for (int i = 0; i < nodes.size(); i++)
-      delete nodes[i];
   }
 
   // create sample heap (given in figure Fig 10 (a))
