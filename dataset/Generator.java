@@ -7,8 +7,6 @@ public class Generator {
 
     public static void main(String[] args) throws Exception {
 
-
-
         String[] name={"/insert","/merge"};
         String path="C:\\Users\\111\\CLionProjects\\semester-work-binomial-heap123123\\dataset\\data";
 
