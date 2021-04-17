@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
   output_streams.emplace_back("/dataset-generated1kk.csv");
   output_streams.emplace_back("/dataset-generated5kk.csv");
 
-  vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000};
+  vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000, 5000000};
 
   while (!integers.empty()){
     auto output_stream = ofstream(path + output_streams.front() /**, ios::ios_base::app**/);
