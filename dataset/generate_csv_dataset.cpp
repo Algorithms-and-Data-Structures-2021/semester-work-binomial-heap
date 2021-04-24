@@ -41,17 +41,41 @@ int main(int argc, char** argv) {
   }
 
   // Пример: генерация набора данных
-  auto output_stream = ofstream(path + "/dataset-generated.csv", ios::ios_base::app);
 
-  const auto seed = chrono::system_clock::now().time_since_epoch().count();
-  auto engine = mt19937(seed);  // без seed`а генератор будет выдавать одни и те же значения
-  auto dist = uniform_int_distribution(0, 10);  // равновероятное распределение генерируемых чисел
+  vector<string> output_streams;
 
-  if (output_stream) {
-    for (int counter = 0; counter < 10; counter++) {
-      output_stream << dist(engine) << ',';
+  output_streams.emplace_back("/dataset-generated100.csv");
+  output_streams.emplace_back("/dataset-generated500.csv");
+  output_streams.emplace_back("/dataset-generated1000.csv");
+  output_streams.emplace_back("/dataset-generated5k.csv");
+  output_streams.emplace_back("/dataset-generated10k.csv");
+  output_streams.emplace_back("/dataset-generated25k.csv");
+  output_streams.emplace_back("/dataset-generated50k.csv");
+  output_streams.emplace_back("/dataset-generated100k.csv");
+  output_streams.emplace_back("/dataset-generated250k.csv");
+  output_streams.emplace_back("/dataset-generated500k.csv");
+  output_streams.emplace_back("/dataset-generated750k.csv");
+  output_streams.emplace_back("/dataset-generated1kk.csv");
+  output_streams.emplace_back("/dataset-generated5kk.csv");
+
+  vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000, 5000000};
+
+  while (!integers.empty()){
+    auto output_stream = ofstream(path + output_streams.front() /, ios::ios_base::app/);
+
+    const auto seed = chrono::system_clock::now().time_since_epoch().count();
+    auto engine = mt19937(seed);  // без seed`а генератор будет выдавать одни и те же значения
+    auto dist = uniform_int_distribution(0, 100);  // равновероятное распределение генерируемых чисел
+
+    if (output_stream) {
+      for (int counter = 0; counter < integers.front(); counter++) {
+        output_stream << dist(engine) << ',';
+      }
+      output_stream << dist(engine) << '\n';
     }
-    output_stream << dist(engine) << '\n';
+
+    integers.erase(integers.begin());
+    output_streams.erase(output_streams.begin());
   }
 
   return 0;
