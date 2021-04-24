@@ -26,7 +26,7 @@ vector<int> split(const string& s, char delimiter) {
   return tokens;
 }
 
-int main(int argc, char** argv) {
+int main() {
 
   string path = string("C:\\Users\\79196\\CLionProjects\\semester-work-binomial-heap\\dataset\\data\\100.csv");
   ifstream input_stream;
@@ -51,7 +51,7 @@ int main(int argc, char** argv) {
       heap1->insert(intValues[i]);
     }
     heap1->printHeap();
-    for (int i = 0; i < intValues.size()/2; ++i) {
+    for (int i = intValues.size()/2; i < intValues.size(); ++i) {
       heap2->insert(intValues[i]);
     }
     heap2->printHeap();
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 
     heap1->mergeHeaps(heap2);
     const auto time_point_after = chrono::high_resolution_clock::now();
-
+heap1->printHeap();
     // переводим время в наносекунды
     const auto time_diff = time_point_after - time_point_before;
     const long time_elapsed_ns = chrono::duration_cast<chrono::nanoseconds>(time_diff).count();

@@ -76,7 +76,6 @@ namespace itis {
 
       NodePtr prev = nullptr;
       NodePtr next = newHeap->sibling;
-      //
       while (next != nullptr) {
 
         if ((newHeap->degree != next->degree)
@@ -214,19 +213,19 @@ namespace itis {
       cout << "Tree degree is " << currPtr->degree << endl;
       cout << pow(2, currPtr->degree) << " nodes in the tree" << endl;
       cout << "Here they are from left to right: " << endl;
-      queue<NodePtr> q;
-      q.push(currPtr);
+      queue<NodePtr> queue;
+      queue.push(currPtr);
 
-      while (!q.empty()) {
-        NodePtr p = q.front();
-        q.pop();
-        cout << p->data << " ";
+      while (!queue.empty()) {
+        NodePtr current = queue.front();
+        queue.pop();
+        cout << current->data << " ";
 
-        if (p->child != nullptr) {
-          NodePtr tempPtr = p->child;
+        if (current->child != nullptr) {
+          NodePtr tempPtr = current->child;
 
           while (tempPtr != nullptr) {
-            q.push(tempPtr);
+            queue.push(tempPtr);
             tempPtr = tempPtr->sibling;
           }
         }
@@ -240,17 +239,17 @@ namespace itis {
     NodePtr currPtr = this->head;
     vector<Node *> nodes;
     while (currPtr != nullptr) {
-      queue<NodePtr> q;
-      q.push(currPtr);
-      while (!q.empty()) {
-        NodePtr p = q.front();
-        nodes.push_back(q.front());
-        q.pop();
+      queue<NodePtr> queue;
+      queue.push(currPtr);
+      while (!queue.empty()) {
+        NodePtr current = queue.front();
+        nodes.push_back(queue.front());
+        queue.pop();
 
-        if (p->child != nullptr) {
-          NodePtr tempPtr = p->child;
+        if (current->child != nullptr) {
+          NodePtr tempPtr = current->child;
           while (tempPtr != nullptr) {
-            q.push(tempPtr);
+            queue.push(tempPtr);
             tempPtr = tempPtr->sibling;
           }
         }
@@ -262,4 +261,4 @@ namespace itis {
       delete nodes[i];
   }
 
-}  // namespace itis
+}
