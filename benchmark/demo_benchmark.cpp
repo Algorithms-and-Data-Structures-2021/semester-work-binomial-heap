@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
 
     const auto time_point_before = chrono::high_resolution_clock::now();
 
-  heap1->merge(heap2);
+    heap1->mergeHeaps(heap2);
     const auto time_point_after = chrono::high_resolution_clock::now();
 
     // переводим время в наносекунды

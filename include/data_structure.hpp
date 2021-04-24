@@ -27,7 +27,9 @@ namespace itis {
     }
 
     ~Node();
+
   };
+
 
   struct BinomialHeap {
    public:
@@ -36,10 +38,19 @@ namespace itis {
     BinomialHeap();
     explicit BinomialHeap(Node *node);
 
-    static void linkBinomialTrees(Node *newTree, Node *addedTree);
-    void setHead(Node *head);
-    void merge(BinomialHeap *addedHeap);
+    static void mergeTrees(Node *newTree, Node *addedTree);
+    void createSampleHeap1();
+    void createSampleHeap2();
+    void createSampleHeap3();
+    void printHeap();
+    Node * getHead();
+    int deleteMinNode();
+    void reverseHeap();
+    void setHead(Node * head);
+    void mergeHeaps(BinomialHeap *addedHeap);
+    void insert(int data);
     ~BinomialHeap();
+
   };
 
-}  // namespace itis
+}

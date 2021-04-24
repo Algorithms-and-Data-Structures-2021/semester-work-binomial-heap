@@ -7,65 +7,36 @@
 #include <chrono>       // system_clock
 
 using namespace std;
-
-// абсолютный путь до набора данных
 static constexpr auto kDatasetPath = string_view{PROJECT_DATASET_DIR};
 
-int main(int argc, char** argv) {
+int main() {
 
-  // Tip 1: можете передать путь до входного/выходного файла в качестве аргумента
-  for (int index = 0; index < argc; index++) {
-    cout << "Arg: " << argv[index] << '\n';
-  }
-
-  const auto path = string(kDatasetPath);  // конвертация string_view в string
-  cout << "Dataset path: " << path << endl;
-
-  // Пример: чтение набора данных
-  auto input_stream = ifstream(path + "/dataset-example.csv");
-
-  if (input_stream) {
-    int line_number = 0;
-
-    // построчное чтение
-    for (string line; getline(input_stream, line); /* ... */) {
-      auto ss = stringstream(line);  // оборачиваем строку в объект "поток"
-
-      for (string token; getline(ss, token, ','); /* ... */) {
-        cout << "Token: [" << token << "] at line " << line_number << '\n';
-      }
-
-      cout << line << '\n';
-      line_number++;
-    }
-  }
-
-  // Пример: генерация набора данных
+  const auto path = string(kDatasetPath);
 
   vector<string> output_streams;
 
-  output_streams.emplace_back("/dataset-generated100.csv");
-  output_streams.emplace_back("/dataset-generated500.csv");
-  output_streams.emplace_back("/dataset-generated1000.csv");
-  output_streams.emplace_back("/dataset-generated5k.csv");
-  output_streams.emplace_back("/dataset-generated10k.csv");
-  output_streams.emplace_back("/dataset-generated25k.csv");
-  output_streams.emplace_back("/dataset-generated50k.csv");
-  output_streams.emplace_back("/dataset-generated100k.csv");
-  output_streams.emplace_back("/dataset-generated250k.csv");
-  output_streams.emplace_back("/dataset-generated500k.csv");
-  output_streams.emplace_back("/dataset-generated750k.csv");
-  output_streams.emplace_back("/dataset-generated1kk.csv");
-  output_streams.emplace_back("/dataset-generated5kk.csv");
+  output_streams.emplace_back("/100.csv");
+  output_streams.emplace_back("/500.csv");
+  output_streams.emplace_back("/1000.csv");
+  output_streams.emplace_back("/5000.csv");
+  output_streams.emplace_back("/10000.csv");
+  output_streams.emplace_back("/25000.csv");
+  output_streams.emplace_back("/50000.csv");
+  output_streams.emplace_back("/10000.csv");
+  output_streams.emplace_back("/250000.csv");
+  output_streams.emplace_back("/500000.csv");
+  output_streams.emplace_back("/750000.csv");
+  output_streams.emplace_back("/1000000.csv");
+  output_streams.emplace_back("/5000000.csv");
 
   vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000, 5000000};
 
   while (!integers.empty()){
-    auto output_stream = ofstream(path + output_streams.front() /, ios::ios_base::app/);
+    auto output_stream = ofstream(path + output_streams.front());
 
     const auto seed = chrono::system_clock::now().time_since_epoch().count();
-    auto engine = mt19937(seed);  // без seed`а генератор будет выдавать одни и те же значения
-    auto dist = uniform_int_distribution(0, 100);  // равновероятное распределение генерируемых чисел
+    auto engine = mt19937(seed);
+    auto dist = uniform_int_distribution(0, 100);
 
     if (output_stream) {
       for (int counter = 0; counter < integers.front(); counter++) {
