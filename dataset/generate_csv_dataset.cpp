@@ -9,7 +9,25 @@
 using namespace std;
 static constexpr auto kDatasetPath = string_view{PROJECT_DATASET_DIR};
 
-int main() {
+void addNewData(string pathToFile, int count) {
+
+  const auto path = string(kDatasetPath);
+
+  auto output_stream = ofstream(path + pathToFile);
+
+  const auto seed = chrono::system_clock::now().time_since_epoch().count();
+  auto engine = mt19937(seed);
+  auto dist = uniform_int_distribution(0, 100);
+
+  if (output_stream) {
+    for (int counter = 0; counter < count; counter++) {
+      output_stream << dist(engine) << ',';
+    }
+    output_stream << dist(engine) << '\n';
+  }
+}
+
+void addNewAllData() {
 
   const auto path = string(kDatasetPath);
 
@@ -31,7 +49,7 @@ int main() {
 
   vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000, 5000000};
 
-  while (!integers.empty()){
+  while (!integers.empty()) {
     auto output_stream = ofstream(path + output_streams.front());
 
     const auto seed = chrono::system_clock::now().time_since_epoch().count();
@@ -48,6 +66,10 @@ int main() {
     integers.erase(integers.begin());
     output_streams.erase(output_streams.begin());
   }
+}
 
+int main() {
+  addNewData("/100.csv", 100);
+//  addNewAllData();
   return 0;
 }
