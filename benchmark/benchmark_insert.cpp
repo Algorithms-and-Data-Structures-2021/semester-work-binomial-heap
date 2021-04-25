@@ -37,8 +37,8 @@ int main() {
     int temporaryCount;
     std::cin >> temporaryCount;
 
-    vector<int> integers = {100,    500,    1000,   5000,   10000,   25000,  50000,
-                            100000, 250000, 500000, 750000, 1000000, 5000000};
+    vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000};
+    cout << "Enter the amount of data" << endl;
     for (int i = 0; i < integers.size(); ++i) {
       if (temporaryCount == integers[i]) {
         flag = false;
@@ -51,9 +51,10 @@ int main() {
     }
   }
 
-  //чтение из файла
   const auto output_path = string(kProjectPath) + "/benchmark/metrics.csv";
   auto output_stream = ofstream(output_path);
+
+  //чтение из файла
 
   const auto path = string(kDatasetPath);
   string pathToFile = string(path + "/" + std::to_string(count) + ".csv");
@@ -85,7 +86,6 @@ int main() {
       // переводим время в наносекунды
       const auto time_diff = time_point_after - time_point_before;
       const long time_elapsed_ns = chrono::duration_cast<chrono::nanoseconds>(time_diff).count();
-      cout << (float) time_elapsed_ns / (1000 * count) << endl;
       //запись в файл
       if (output_stream) {
         output_stream << (float) time_elapsed_ns / (1000 * count) << endl;

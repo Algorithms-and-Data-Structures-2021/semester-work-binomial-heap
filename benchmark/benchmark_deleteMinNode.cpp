@@ -38,7 +38,8 @@ int main() {
     std::cin >> temporaryCount;
 
     vector<int> integers = {100,    500,    1000,   5000,   10000,   25000,  50000,
-                            100000, 250000, 500000, 750000, 1000000, 5000000};
+                            100000, 250000, 500000, 750000, 1000000};
+    cout << "Enter the amount of data" << endl;
     for (int i = 0; i < integers.size(); ++i) {
       if (temporaryCount == integers[i]) {
         flag = false;

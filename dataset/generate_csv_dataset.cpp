@@ -27,9 +27,8 @@ int main() {
   output_streams.emplace_back("/500000.csv");
   output_streams.emplace_back("/750000.csv");
   output_streams.emplace_back("/1000000.csv");
-  output_streams.emplace_back("/5000000.csv");
 
-  vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000, 5000000};
+  vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000};
 
   while (!integers.empty()){
     auto output_stream = ofstream(path + output_streams.front());
@@ -39,7 +38,7 @@ int main() {
     auto dist = uniform_int_distribution(0, 100);
 
     if (output_stream) {
-      for (int counter = 0; counter < integers.front(); counter++) {
+      for (int counter = 0; counter < integers.front()-1; counter++) {
         output_stream << dist(engine) << ',';
       }
       output_stream << dist(engine) << '\n';
