@@ -129,7 +129,6 @@ namespace itis {
   }
 
   Node::~Node() {
-    cout <<this->data;
     data = 0;
     degree = 0;
     parent = nullptr;
@@ -154,7 +153,7 @@ namespace itis {
 
       while (node != nullptr) {
 
-        if (node->data < minNode->data) {
+        if (node->data <= minNode->data) {
           minNode = node;
           minPrevNode = prevNode;
         }

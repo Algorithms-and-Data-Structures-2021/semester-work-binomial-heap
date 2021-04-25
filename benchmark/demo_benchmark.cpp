@@ -47,8 +47,8 @@ void addNewData(string pathToFile, int count) {
 int main() {
 
   const auto path = string(kDatasetPath);
-  int count = 100000;
-  string pathToFile = string(path + "/" + std::to_string(count)  + ".csv");
+  int count = 750000;
+  string pathToFile = string(path + "/" + std::to_string(count) + ".csv");
 
   for (int i = 0; i < 10; ++i) {
 
@@ -68,32 +68,25 @@ int main() {
 
       // Tip 3: время работы программы (или участка кода) можно осуществить
       // как изнутри программы (std::chrono), так и сторонними утилитами
+
       for (int j = 0; j < 10; ++j) {
-      BinomialHeap* heap1 = new BinomialHeap();
-      BinomialHeap* heap2 = new BinomialHeap();
+        BinomialHeap* heap1 = new BinomialHeap();
 
-      for (int k = 0; k < count/2; ++k) {
-        heap1->insert(intValues[k]);
-      }
-      for (int k = count/2 ; k < count; ++k) {
-        heap2->insert(intValues[k]);
-      }
+        for (int k = 0; k < count; ++k) {
+          heap1->insert(intValues[k]);
+        }
+
         const auto time_point_before = chrono::high_resolution_clock::now();
+        heap1->deleteMinNode();
 
-        heap1->mergeHeaps(heap2);
         const auto time_point_after = chrono::high_resolution_clock::now();
         // переводим время в наносекунды
         const auto time_diff = time_point_after - time_point_before;
-        const long time_elapsed_ns = chrono::duration_cast<chrono::nanoseconds>(time_diff).count();
-        float dou = (float) time_elapsed_ns/10000;
-        cout<< dou << '\n';
+        const long time_elapsed_ns = chrono::duration_cast<chrono::microseconds>(time_diff).count();
+        float dou = (float) time_elapsed_ns;
+        cout << dou << '\n';
       }
-
     }
-
   }
   return 0;
-
 }
-
-
