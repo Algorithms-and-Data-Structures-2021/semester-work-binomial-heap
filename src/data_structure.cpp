@@ -153,7 +153,7 @@ namespace itis {
 
       while (node != nullptr) {
 
-        if (node->data <= minNode->data) {
+        if (node->data < minNode->data) {
           minNode = node;
           minPrevNode = prevNode;
         }
