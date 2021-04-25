@@ -22,7 +22,7 @@ int main() {
   output_streams.emplace_back("/10000.csv");
   output_streams.emplace_back("/25000.csv");
   output_streams.emplace_back("/50000.csv");
-  output_streams.emplace_back("/10000.csv");
+  output_streams.emplace_back("/100000.csv");
   output_streams.emplace_back("/250000.csv");
   output_streams.emplace_back("/500000.csv");
   output_streams.emplace_back("/750000.csv");

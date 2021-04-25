@@ -32,23 +32,25 @@ int main() {
   int count;
 
   //проверка, верно ли введено количество данных
-    while (flag) {
-      std::cin >> count;
-      vector<int> integers = {100,    500,    1000,   5000,   10000,   25000,  50000,
-                              100000, 250000, 500000, 750000, 1000000, 5000000};
-      for (int i = 0; i < integers.size(); ++i) {
-        if (count == integers[i]) {
-          flag = false;
-          break;
-        }
-      }
-      if (flag) {
-        cout << "Invalid amount of data." << endl;
+  while (flag) {
+    std::cin >> count;
+    vector<int> integers = {100,    500,    1000,   5000,   10000,   25000,  50000,
+                            100000, 250000, 500000, 750000, 1000000, 5000000};
+    for (int i = 0; i < integers.size(); ++i) {
+      if (count == integers[i]) {
+        flag = false;
+        break;
       }
     }
+    if (flag){
+      cout << "Invalid amount of data." << endl;
+    }
+  }
+
 
   //чтение из файла
-  const auto output_path = string(kProjectPath) + "/benchmark/test_data/insert/" + std::to_string(count) + ".csv";
+  const auto output_path =
+      string(kProjectPath) + "/benchmark/test_data/deleteMinNode/" + std::to_string(count) + ".csv";
   auto output_stream = ofstream(output_path);
 
   const auto path = string(kDatasetPath);
@@ -60,25 +62,23 @@ int main() {
   if (!input_stream.is_open()) {
   } else {
     while (getline(input_stream, line)) {
-
       intValues = split(line, ',');
     }
 
     input_stream.close();
 
 
+    //создание кучи из полученных данных
+    BinomialHeap* heap1 = new BinomialHeap();
+    for (int k = 0; k < count; ++k) {
+      heap1->insert(intValues[k]);
+    }
 
     // замеры времени
     for (int j = 0; j < 10; ++j) {
-
       const auto time_point_before = chrono::high_resolution_clock::now();
 
-      //создание кучи из полученных данных
-      BinomialHeap* heap1 = new BinomialHeap();
-      for (int k = 0; k < count; ++k) {
-        heap1->insert(intValues[k]);
-      }
-
+      heap1->deleteMinNode();
       const auto time_point_after = chrono::high_resolution_clock::now();
       // переводим время в наносекунды
       const auto time_diff = time_point_after - time_point_before;
@@ -86,8 +86,9 @@ int main() {
 
       //запись в файл
       if (output_stream) {
-        output_stream << (float) time_elapsed_ns /( 1000*count) << endl;
+        output_stream << time_elapsed_ns << endl;
       }
+
     }
   }
 

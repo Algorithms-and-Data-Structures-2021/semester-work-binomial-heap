@@ -23,7 +23,7 @@ namespace itis {
   }
 
   void BinomialHeap::mergeHeaps(BinomialHeap *addedHeap) {
-    Node *tempHeap = nullptr;
+    Node *temporaryHeap = nullptr;
 
     if (this->head != nullptr && addedHeap->head != nullptr) {
 
@@ -112,8 +112,8 @@ namespace itis {
 
     if (this->head == nullptr) {
 
-      tempHeap = addedHeap->head;
-      setHead(tempHeap);
+      temporaryHeap = addedHeap->head;
+      setHead(temporaryHeap);
     }
   }
 
