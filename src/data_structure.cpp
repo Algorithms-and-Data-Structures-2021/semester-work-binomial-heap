@@ -178,7 +178,7 @@ namespace itis {
       minNode->sibling = nullptr;
       minNode->child = nullptr;
       minNode->parent = nullptr;
-      minValue = minNode->degree;
+      minValue = minNode->data;
       delete minNode;
       BinomialHeap *heap1 = new BinomialHeap(minNodeСhild);
       heap1->reverseHeap();
@@ -233,6 +233,7 @@ namespace itis {
       cout << endl << endl;
     }
   }
+
 
   BinomialHeap::~BinomialHeap() {
     NodePtr currPtr = this->head;
