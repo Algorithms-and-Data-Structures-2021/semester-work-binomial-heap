@@ -140,7 +140,7 @@ namespace itis {
     Node *prevNode = nullptr;
     Node *minNode = nullptr;
     Node *node = nullptr;
-    Node *minNodeСhild = nullptr;
+    Node *minNodeChild = nullptr;
     int minValue = INT_MAX;
 
     if (this->head != nullptr) {
@@ -167,8 +167,8 @@ namespace itis {
         this->head = minNode->sibling;
       }
 
-      minNodeСhild = minNode->child;
-      node = minNodeСhild;
+      minNodeChild = minNode->child;
+      node = minNodeChild;
 
       while (node != nullptr) {
         node->parent = minNode->parent;
@@ -180,7 +180,7 @@ namespace itis {
       minNode->parent = nullptr;
       minValue = minNode->data;
       delete minNode;
-      BinomialHeap *heap1 = new BinomialHeap(minNodeСhild);
+      BinomialHeap *heap1 = new BinomialHeap(minNodeChild);
       heap1->reverseHeap();
       mergeHeaps(heap1);
     }
