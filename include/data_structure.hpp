@@ -3,7 +3,6 @@
 namespace itis {
 
   struct Node {
-
     int data;
     int degree;
     Node *parent;
@@ -27,9 +26,7 @@ namespace itis {
     }
 
     ~Node();
-
   };
-
 
   struct BinomialHeap {
    public:
@@ -43,14 +40,13 @@ namespace itis {
     void createSampleHeap2();
     void createSampleHeap3();
     void printHeap();
-    Node * getHead();
+    Node *getHead();
     int deleteMinNode();
     void reverseHeap();
-    void setHead(Node * head);
+    void setHead(Node *head);
     void mergeHeaps(BinomialHeap *addedHeap);
     void insert(int data);
     ~BinomialHeap();
-
   };
 
-}
+}  // namespace itis
