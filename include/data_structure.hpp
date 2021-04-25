@@ -18,7 +18,7 @@ namespace itis {
       this->sibling = nullptr;
     }
 
-    explicit Node(int data, int degree) {
+    explicit Node(int data, int degree){
       this->data = data;
       this->degree = degree;
       this->parent = nullptr;
