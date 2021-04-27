@@ -1,6 +1,6 @@
 #Биномиальная куча
 
-[![CMake](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-template/actions/workflows/cmake.yml/badge.svg)](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-template/actions/workflows/cmake.yml)
+[![CMake](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-binomial-heap/actions/workflows/cmake.yml/badge.svg)](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-binomial-heap/actions/workflows/cmake.yml)
 
 https://drive.google.com/drive/folders/1-p9M5AXZTXIXM9PM4MRjlpkHWtD8deeH
 
