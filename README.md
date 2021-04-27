@@ -2,6 +2,8 @@
 
 [![CMake](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-template/actions/workflows/cmake.yml/badge.svg)](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-template/actions/workflows/cmake.yml)
 
+https://drive.google.com/drive/folders/1-p9M5AXZTXIXM9PM4MRjlpkHWtD8deeH
+
 **_Измените status badge сверху для отображения статуса сборки вашего проекта._**
 
 `Actions > CMake > ... > Create status badge`
