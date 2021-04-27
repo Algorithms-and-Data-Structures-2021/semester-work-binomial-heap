@@ -2,6 +2,8 @@
 #include <iostream>
 #include "queue"
 #include "stack"
+#include "math.h"
+#include <climits>
 
 using namespace std;
 namespace itis {
@@ -257,7 +259,7 @@ namespace itis {
 
       currPtr = currPtr->sibling;
     }
-    for (int i = 0; i < nodes.size(); i++)
+    for (int i = 0; i < (int) nodes.size(); i++)
       delete nodes[i];
   }
 
