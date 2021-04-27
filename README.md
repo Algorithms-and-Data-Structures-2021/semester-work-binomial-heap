@@ -97,9 +97,6 @@ cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo && cmake --config RelWithDebInfo --bu
 | `benchmark_insert`           | вставка элемента в куча | _время |
 |bencmark_deleteMin             | удаление минимального элемента в куче                                     | время             |
 
-##### Примеры запуска
-
-Описаны в контрольных тестах.
 
 ## Источники
 
