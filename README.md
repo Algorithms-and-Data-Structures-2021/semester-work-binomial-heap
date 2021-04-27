@@ -104,7 +104,7 @@ cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo && cmake --config RelWithDebInfo --bu
 
 ## Источники
 
-https://www.geeksforgeeks.org/binomial-heap-2/
-https://iq.opengenus.org/binomial-heap/
-https://ru.wikipedia.org/wiki/Биномиальная_куча#:~:te..(англ.%20binomial%20heap),биномиальных%20деревьев%20с%20двумя%20свойствами%3A
-https://www.youtube.com/watch?v=PzytwZRjjS8&t=1301s
+1. https://www.geeksforgeeks.org/binomial-heap-2/
+2. https://iq.opengenus.org/binomial-heap/
+3. https://ru.wikipedia.org/wiki/Биномиальная_куча#:~:te..(англ.%20binomial%20heap),биномиальных%20деревьев%20с%20двумя%20свойствами%3A
+4. https://www.youtube.com/watch?v=PzytwZRjjS8&t=1301s
