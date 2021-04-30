@@ -4,6 +4,7 @@
 #include <string_view>  // string_view
 #include <chrono>       // high_resolution_clock, duration_cast, nanoseconds
 #include <vector>
+#include <sstream>
 
 // подключаем структуру данных
 #include "binomial_heap.hpp"

@@ -256,7 +256,7 @@ namespace itis {
       currPtr = currPtr->sibling;
     }
     for (int i = 0; i < static_cast<int>(nodes.size()); i++)
-      delete nodes[i];
+      delete nodes[ static_cast<int>(i)];
   }
 
 }  // namespace itis

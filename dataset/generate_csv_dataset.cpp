@@ -34,7 +34,7 @@ int main() {
     auto output_stream = ofstream(path + output_streams.front());
 
     const auto seed = chrono::system_clock::now().time_since_epoch().count();
-    auto engine = mt19937(seed);
+    auto engine = mt19937( static_cast<int>(seed));
     auto dist = uniform_int_distribution(0, 100);
 
     if (output_stream) {
