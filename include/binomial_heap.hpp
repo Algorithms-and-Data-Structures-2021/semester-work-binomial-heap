@@ -36,9 +36,6 @@ namespace itis {
     explicit BinomialHeap(Node *node);
 
     static void mergeTrees(Node *newTree, Node *addedTree);
-    void createSampleHeap1();
-    void createSampleHeap2();
-    void createSampleHeap3();
     void printHeap();
     Node *getHead();
     int deleteMinNode();

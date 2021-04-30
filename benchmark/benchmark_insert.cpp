@@ -4,16 +4,9 @@
 #include <string_view>  // string_view
 #include <chrono>       // high_resolution_clock, duration_cast, nanoseconds
 #include <vector>
-#include <fstream>      // ifstream, ofstream
-#include <iostream>     // cout
-#include <sstream>      // stringstream
-#include <string>       // string, getline
-#include <string_view>  // string_view
-#include <random>       // mt19937_64, random_device
-#include <chrono>       // system_clock
 
-// подключаем вашу структуру данных
-#include "data_structure.hpp"
+// подключаем структуру данных
+#include "binomial_heap.hpp"
 
 using namespace std;
 using namespace itis;
@@ -39,25 +32,23 @@ int main() {
   int count;
 
   //проверка, верно ли введено количество данных
-  while (flag) {
-    cout << "Enter the amount of data (100, 500, 1000, 5000,"
-            " 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000)"
-         << endl;
+  cout << "Enter the amount of data (100, 500, 1000, 5000,"
+          " 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000)"
+       << endl;
 
-    int temporaryCount;
-    std::cin >> temporaryCount;
+  std::cin >> count;
 
-    vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000};
-    for (int i = 0; i < integers.size(); ++i) {
-      if (temporaryCount == integers[i]) {
-        flag = false;
-        count = temporaryCount;
-        break;
-      }
+  vector<int> integers = {100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 750000, 1000000};
+  for (int i = 0; i < integers.size(); ++i) {
+    if (count == integers[i]) {
+      flag = false;
+      break;
     }
-    if (flag) {
-      cout << "Invalid amount of data." << endl;
-    }
+  }
+
+  if (flag) {
+    cout << "Invalid amount of data." << endl;
+    return 0;
   }
 
   //чтение из файла
