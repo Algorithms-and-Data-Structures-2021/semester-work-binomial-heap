@@ -48,7 +48,7 @@
 Склонируйте проект к себе на устройство с помощью IDE:
 
 ```shell
-git clonehttps://github.com/Algorithms-and-Data-Structures-2021/semester-work-binomial-heap.git
+git clone https://github.com/Algorithms-and-Data-Structures-2021/semester-work-binomial-heap.git
 ```
 
 #### Генерация тестовых данных
