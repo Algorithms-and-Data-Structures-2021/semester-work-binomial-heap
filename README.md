@@ -1,4 +1,4 @@
-#Биномиальная куча
+#Биномиальная куча#
 
 [![CMake](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-binomial-heap/actions/workflows/cmake.yml/badge.svg)](https://github.com/Algorithms-and-Data-Structures-2021/semester-work-binomial-heap/actions/workflows/cmake.yml)
 
