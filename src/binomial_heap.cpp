@@ -97,8 +97,7 @@ namespace itis {
             if (prev == nullptr) {
               tempHeap = next;
             } else {
-              prev->sibling =
-                  next;
+              prev->sibling = next;
             }
 
             BinomialHeap::mergeTrees(next, newHeap);
@@ -108,8 +107,7 @@ namespace itis {
 
         next = newHeap->sibling;
       }
-      setHead(
-          tempHeap);
+      setHead(tempHeap);
     }
 
     if (this->head == nullptr) {
@@ -151,7 +149,6 @@ namespace itis {
       minNode = this->head;
       node = (this->head)->sibling;
       prevNode = this->head;
-
 
       while (node != nullptr) {
 
@@ -236,7 +233,6 @@ namespace itis {
     }
   }
 
-
   BinomialHeap::~BinomialHeap() {
     NodePtr currPtr = this->head;
     vector<Node *> nodes;
@@ -259,8 +255,8 @@ namespace itis {
 
       currPtr = currPtr->sibling;
     }
-    for (int i = 0; i < (int) nodes.size(); i++)
+    for (int i = 0; i < static_cast<int>(nodes.size()); i++)
       delete nodes[i];
   }
 
-}
+}  // namespace itis

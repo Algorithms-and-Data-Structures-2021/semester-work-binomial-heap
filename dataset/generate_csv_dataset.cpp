@@ -15,7 +15,7 @@ int main() {
 
   vector<string> output_streams;
 
-  output_streams.emplace_back("/100.csv");
+  output_streams.emplace_back("/Info.csv");
   output_streams.emplace_back("/500.csv");
   output_streams.emplace_back("/1000.csv");
   output_streams.emplace_back("/5000.csv");
